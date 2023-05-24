@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>{{ question.title }}</h2>
+  <p>{{ question.content }}</p>
+  <hr>
+  <h3>Answers:</h3>
+  {% for answer in answers %}
+    <div>
+      <p>{{ answer.content }}</p>
+      <form method="POST" action="{% url 'like_answer' answer.id %}">
+        {% csrf_token %}
+        <button type="submit">Like</button>
+      </form>
+    </div>
+    <hr>
+  {% empty %}
+    <p>No answers yet.</p>
+  {% endfor %}
+  <hr>
+  <h3>Post an Answer:</h3>
+  <form method="POST" action="{% url 'post_answer' question.id %}">
+    {% csrf_token %}
+    <textarea name="content" placeholder="Content"></textarea><br>
+    <button type="submit">Submit</button>
+  </form>
+{% endblock %}
